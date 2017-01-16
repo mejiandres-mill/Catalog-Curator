@@ -9,25 +9,12 @@ namespace Curator
 {
     public class App : Application
     {
+        public static RESTManager Manager { get; set; }
+
         public App()
         {
-            // The root page of your application
-            var content = new ContentPage
-            {
-                Title = "Curator",
-                Content = new StackLayout
-                {
-                    VerticalOptions = LayoutOptions.Center,
-                    Children = {
-                        new Label {
-                            HorizontalTextAlignment = TextAlignment.Center,
-                            Text = "Welcome to Xamarin Forms!"
-                        }
-                    }
-                }
-            };
-
-            MainPage = new NavigationPage(content);
+            Manager = new RESTManager(new RestService());
+            MainPage = new NavigationPage(new ProductsPage());
         }
 
         protected override void OnStart()
