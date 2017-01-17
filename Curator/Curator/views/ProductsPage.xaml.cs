@@ -91,6 +91,8 @@ namespace Curator
                 Constraint.RelativeToParent((parent) => { return parent.Width; })
                 );
 
+            Content = view;
+
         }
         protected async override void OnAppearing()
         {
