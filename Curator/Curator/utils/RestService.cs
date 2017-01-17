@@ -131,6 +131,8 @@ namespace Curator
             }
         }
 
+       
+
         private JObject CreateMessage(int operation, JObject data)
         {
             JObject message = new JObject();

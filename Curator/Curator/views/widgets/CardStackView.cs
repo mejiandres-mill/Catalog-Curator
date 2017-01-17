@@ -208,6 +208,10 @@ namespace Curator
             {
                 ((RelativeLayout)this.Content).LowerChild(topCard);
 
+                topCard.Scale = BackCardScale;
+                topCard.RotateTo(0, 0);
+                topCard.TranslateTo(0, -topCard.Y, 0);
+
                 topCard.Name.Text = ItemsSource[itemIndex].name;
                 topCard.Price.Text = ItemsSource[itemIndex].price;
                 topCard.Photo.Source = ImageSource.FromUri(new Uri(ItemsSource[itemIndex].image));

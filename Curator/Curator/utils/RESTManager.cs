@@ -31,5 +31,6 @@ namespace Curator
         {
             return restService.AcceptProducts(state, id);
         }
+       
     }
 }

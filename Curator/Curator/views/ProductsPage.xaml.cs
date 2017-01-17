@@ -83,7 +83,32 @@ namespace Curator
                 WidthRequest = 50,
                 HorizontalOptions = LayoutOptions.CenterAndExpand
             };
+
+            Image btnProductsAccepted = new Image
+            {
+                Source = "like.png",
+                BackgroundColor = Color.White,
+                HeightRequest = 25,
+                WidthRequest = 25,
+                HorizontalOptions = LayoutOptions.CenterAndExpand
+            };
+
+            TapGestureRecognizer tapper_accepted = new TapGestureRecognizer();
+            tapper_accepted.Tapped += OnAcceptedProduct;
+            btnProductsAccepted.GestureRecognizers.Add(tapper_accepted);
+
+            Image btnProductsRejected = new Image
+            {
+                Source = "dislike.png",
+                BackgroundColor = Color.White,
+                HeightRequest = 25,
+                WidthRequest = 25,
+                HorizontalOptions = LayoutOptions.CenterAndExpand
+            };
+
+            bottomMenu.Children.Add(btnProductsRejected);
             bottomMenu.Children.Add(btnProduct);
+            bottomMenu.Children.Add(btnProductsAccepted);
 
             view.Children.Add(bottomMenu,
                 Constraint.Constant(0),
@@ -126,6 +151,11 @@ namespace Curator
             string result = await App.Manager.RejectProducts(Constants.REJECT_PROD, idproduct);
             if (result.Equals("FAIL"))
                 notificator.Notify(ToastNotificationType.Error, "Curator", "Error al rechazar producto " + idproduct, TimeSpan.FromSeconds(2));
+        }
+
+        private async void OnAcceptedProduct(object sender, EventArgs e)
+        {
+            Navigation.InsertPageBefore(new AcceptedProducts(Constants.LIKE_PROD), this);
         }
     }
 }
