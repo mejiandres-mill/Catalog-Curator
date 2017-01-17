@@ -95,7 +95,7 @@ namespace Curator
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            notificator.Notify(ToastNotificationType.Error, "Wiishper", "Error al rechazar el producto", TimeSpan.FromSeconds(1));
+            notificator.Notify(ToastNotificationType.Info, "Wiishper", "Leyendo productos...", TimeSpan.FromSeconds(1));
             ((ProductViewModel)BindingContext).ProductList = await App.Manager.GetProducts(Constants.PENDING);
             if (((ProductViewModel)BindingContext).ProductList == null || ((ProductViewModel)BindingContext).ProductList.Count() <= 0)
             {
@@ -116,7 +116,7 @@ namespace Curator
         async void SwipedLeft(int index)
         {
             int idproduct = productCards.product.idproducts;
-            string result = await App.Manager.AcceptProducts(Constants.REJECT_PROD, idproduct);
+            string result = await App.Manager.RejectProducts(Constants.REJECT_PROD, idproduct);
             if (result.Equals("FAIL"))
                 notificator.Notify(ToastNotificationType.Error, "Curator", "Error al rechazar producto " + idproduct, TimeSpan.FromSeconds(2));
         }

@@ -9,6 +9,6 @@ namespace Curator
     class ServiceResult
     {
         public int state { get; set; }
-        public string data { get; set; }
+        public object data { get; set; }
     }
 }

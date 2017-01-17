@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using System.Diagnostics;
+using System.Net.Http.Headers;
 
 namespace Curator
 {
@@ -31,9 +32,11 @@ namespace Curator
             JObject data = new JObject();
             data.Add("state", state);
             var uri = new Uri(Constants.RestURL);
+            PrepareClient();
 
-            JObject sendContent = CreateMessage(Constants.SHOW_PRODS, data);
+            JObject sendContent = CreateMessage( Constants.SHOW_PRODS, data);
             var content = new StringContent(sendContent.ToString(), Encoding.UTF8, "application/json");
+            Debug.WriteLine(sendContent.ToString());
             try
             {
                 var response = await client.PostAsync(uri, content);
@@ -43,7 +46,10 @@ namespace Curator
                     string result = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
                     Debug.WriteLine(result);
                     ServiceResult sr = JsonConvert.DeserializeObject<ServiceResult>(result);
-                    Products = JsonConvert.DeserializeObject<List<Product>>(sr.data);
+                    Debug.WriteLine("*_*_*_*_*_*_*__*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*");
+                    Debug.WriteLine(sr.data);
+                    Debug.WriteLine("*_*_*_*_*_*_*__*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*_*");
+                    Products = JsonConvert.DeserializeObject<List<Product>>(sr.data.ToString());
                 }
                 else
                 {
@@ -136,6 +142,11 @@ namespace Curator
                 message.Add("data", data);
 
             return message;
+        }
+
+        private void PrepareClient()
+        {            
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", "11614066f1b101f695bf2479656da628");
         }
     }
 }

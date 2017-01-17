@@ -5,6 +5,10 @@ using System.Linq;
 using Foundation;
 using UIKit;
 
+using Xamarin.Forms;
+using Plugin.Toasts;
+
+
 namespace Curator.iOS
 {
     // The UIApplicationDelegate for the application. This class is responsible for launching the 
@@ -23,6 +27,8 @@ namespace Curator.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+            DependencyService.Register<ToastNotificatorImplementation>();
+            ToastNotificatorImplementation.Init();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

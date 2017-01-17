@@ -99,7 +99,7 @@ namespace Curator
             Image Location = new Image { Source = "location.png", HorizontalOptions = LayoutOptions.CenterAndExpand };
 
             locationStack.Children.Add(Location);
-            locationStack.Children.Add(locationStack);
+            locationStack.Children.Add(Store);
 
             view.Children.Add(bottomLayout,
                 Constraint.Constant(0),
