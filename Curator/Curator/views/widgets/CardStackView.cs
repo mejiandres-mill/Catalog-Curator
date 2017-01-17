@@ -112,10 +112,13 @@ namespace Curator
             switch (e.StatusType)
             {
                 case GestureStatus.Started:
+                    HandleTouchStart();
                     break;
                 case GestureStatus.Running:
+                    HandleTouch((float)e.TotalX);
                     break;
                 case GestureStatus.Completed:
+                    HandleTouchEnd();
                     break;
                 case GestureStatus.Canceled:
                     break;
