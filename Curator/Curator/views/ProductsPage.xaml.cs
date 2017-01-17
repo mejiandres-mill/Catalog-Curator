@@ -65,7 +65,7 @@ namespace Curator
                 Constraint.Constant(0),
                 Constraint.RelativeToParent((parent) => { return parent.Width; }),
                 Constraint.Constant(50));
-           
+
             StackLayout bottomMenu = new StackLayout
             {
                 Orientation = StackOrientation.Horizontal,
@@ -98,11 +98,16 @@ namespace Curator
         {
             base.OnAppearing();
             notificator.Notify(ToastNotificationType.Info, "Wiishper", "Leyendo productos...", TimeSpan.FromSeconds(1));
-            ((ProductViewModel)BindingContext).ProductList = await App.Manager.GetProducts(Constants.PENDING);
-            if (((ProductViewModel)BindingContext).ProductList == null || ((ProductViewModel)BindingContext).ProductList.Count() <= 0)
+            List<Product> prods = await App.Manager.GetProducts(Constants.PENDING);
+             
+            if (prods == null || prods.Count() <= 0)
             {
                 await notificator.Notify(ToastNotificationType.Error, "Wiishper", "Ooops, no encontramos ningún producto", TimeSpan.FromSeconds(2));
 
+            }
+            else
+            {
+                ((ProductViewModel)BindingContext).ProductList = prods;
             }
         }
 

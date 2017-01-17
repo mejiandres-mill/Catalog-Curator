@@ -25,10 +25,11 @@ namespace Curator
             set
             {
                 if (products == value)
-                {
-                    products = value;
-                    OnProperityChanged();
-                }
+                    return;
+
+                products = value;
+                OnProperityChanged();
+                
             }
         }
 
