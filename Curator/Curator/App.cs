@@ -14,7 +14,7 @@ namespace Curator
         public App()
         {
             Manager = new RESTManager(new RestService());
-            MainPage = new NavigationPage(new ProductsPage());
+            MainPage = new NavigationPage(new ProductsPage(Constants.PENDING));
         }
 
         protected override void OnStart()

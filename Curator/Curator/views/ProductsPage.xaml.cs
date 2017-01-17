@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Plugin.Toasts;
+using System.Diagnostics;
 
 namespace Curator
 {
@@ -13,10 +14,12 @@ namespace Curator
     {
         IToastNotificator notificator;
         CardStackView productCards;
+        int state;
 
-        public ProductsPage()
+        public ProductsPage(int status)
         {
             InitializeComponent();
+            state = status;
             BindingContext = new ProductViewModel();
             productCards = new CardStackView();
             productCards.SetBinding(CardStackView.ItemSourceProperty, "ProductList");
@@ -77,16 +80,20 @@ namespace Curator
 
             Image btnProduct = new Image
             {
-                Source = "main_on.png",
+                Source = status == Constants.PENDING ? "main_on.png": "main_off.png",
                 BackgroundColor = Color.White,
                 HeightRequest = 50,
                 WidthRequest = 50,
                 HorizontalOptions = LayoutOptions.CenterAndExpand
             };
 
+            TapGestureRecognizer tapper_menu = new TapGestureRecognizer();
+            tapper_menu.Tapped += OnProducts;
+            btnProduct.GestureRecognizers.Add(tapper_menu);
+            
             Image btnProductsAccepted = new Image
             {
-                Source = "like.png",
+                Source = status == Constants.OK ? "like_on.png": "like.png",
                 BackgroundColor = Color.White,
                 HeightRequest = 25,
                 WidthRequest = 25,
@@ -99,12 +106,16 @@ namespace Curator
 
             Image btnProductsRejected = new Image
             {
-                Source = "dislike.png",
+                Source = status == Constants.REJECTING ? "dislike_on.png": "dislike.png",
                 BackgroundColor = Color.White,
                 HeightRequest = 25,
                 WidthRequest = 25,
                 HorizontalOptions = LayoutOptions.CenterAndExpand
             };
+
+            TapGestureRecognizer tapper_rejected = new TapGestureRecognizer();
+            tapper_rejected.Tapped += OnRejectedProduct;
+            btnProductsRejected.GestureRecognizers.Add(tapper_rejected);
 
             bottomMenu.Children.Add(btnProductsRejected);
             bottomMenu.Children.Add(btnProduct);
@@ -119,11 +130,18 @@ namespace Curator
             Content = view;
 
         }
+
+        private async void OnProducts(object sender, EventArgs e)
+        {
+            Navigation.InsertPageBefore(new ProductsPage(Constants.PENDING), this);
+            await Navigation.PopAsync();
+        }
+
         protected async override void OnAppearing()
         {
             base.OnAppearing();
             notificator.Notify(ToastNotificationType.Info, "Wiishper", "Leyendo productos...", TimeSpan.FromSeconds(1));
-            List<Product> prods = await App.Manager.GetProducts(Constants.PENDING);
+            List<Product> prods = await App.Manager.GetProducts(state);
              
             if (prods == null || prods.Count() <= 0)
             {
@@ -155,7 +173,13 @@ namespace Curator
 
         private async void OnAcceptedProduct(object sender, EventArgs e)
         {
-            Navigation.InsertPageBefore(new AcceptedProducts(Constants.LIKE_PROD), this);
+             Navigation.InsertPageBefore(new ProductsPage(Constants.OK), this);
+            await Navigation.PopAsync();
+        }
+        private async void OnRejectedProduct(object sender, EventArgs e)
+        {
+            Navigation.InsertPageBefore(new ProductsPage(Constants.REJECTING), this);
+            await Navigation.PopAsync();
         }
     }
 }

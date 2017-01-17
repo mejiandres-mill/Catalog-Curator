@@ -101,6 +101,13 @@ namespace Curator
             locationStack.Children.Add(Location);
             locationStack.Children.Add(Store);
 
+            StackLayout yetAnotherStack = new StackLayout { Spacing = 0, BackgroundColor = Color.White, Orientation = StackOrientation.Horizontal, VerticalOptions = LayoutOptions.Center, HorizontalOptions = LayoutOptions.CenterAndExpand };
+            Image location = new Image { Source = "location.png", HorizontalOptions = LayoutOptions.Fill, Margin = new Thickness(0), BackgroundColor = Color.White };
+            yetAnotherStack.Children.Add(Location);
+            yetAnotherStack.Children.Add(Store);
+
+            bottomLayout.Children.Add(yetAnotherStack);
+
             view.Children.Add(bottomLayout,
                 Constraint.Constant(0),
                 Constraint.RelativeToParent((parent) => { return parent.Height - 51; }),

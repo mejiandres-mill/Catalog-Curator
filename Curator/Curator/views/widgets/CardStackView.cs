@@ -154,7 +154,7 @@ namespace Curator
 
             if (backCard.IsVisible)
             {
-                backCard.Scale = Math.Min((BackCardScale / CardMoveDistance) * (1.0f - BackCardScale), 1.0f);
+                backCard.Scale = Math.Min(BackCardScale + Math.Abs((cardDistance / CardMoveDistance) * (1.0f - BackCardScale)), 1.0f);
 
             }
         }
