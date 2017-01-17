@@ -23,7 +23,8 @@ namespace Curator
         public Action<int> SwipedRight = null;
         public Action<int> SwipedLeft = null;
 
-        public static readonly BindableProperty ItemSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(System.Collections.IList), typeof(CardStackView), null,
+        public static readonly BindableProperty ItemSourceProperty = 
+            BindableProperty.Create(nameof(ItemsSource), typeof(System.Collections.IList), typeof(CardStackView), null,
             propertyChanged: OnItemsSourcePropertyChanged);
 
         public List<Product> ItemsSource
@@ -120,10 +121,6 @@ namespace Curator
                 case GestureStatus.Completed:
                     HandleTouchEnd();
                     break;
-                case GestureStatus.Canceled:
-                    break;
-                default:
-                    break;
             }
         }
 
@@ -154,8 +151,7 @@ namespace Curator
 
             if (backCard.IsVisible)
             {
-                backCard.Scale = Math.Min((BackCardScale / CardMoveDistance) * (1.0f - BackCardScale), 1.0f);
-
+                backCard.Scale = Math.Min(BackCardScale + Math.Abs((cardDistance / CardMoveDistance) * (1.0f - BackCardScale)), 1.0f);
             }
         }
 
@@ -207,6 +203,10 @@ namespace Curator
             if (itemIndex < ItemsSource.Count)
             {
                 ((RelativeLayout)this.Content).LowerChild(topCard);
+
+                topCard.Scale = BackCardScale;
+                topCard.RotateTo(0, 0);
+                topCard.TranslateTo(0, -topCard.Y, 0);
 
                 topCard.Name.Text = ItemsSource[itemIndex].name;
                 topCard.Price.Text = ItemsSource[itemIndex].price;

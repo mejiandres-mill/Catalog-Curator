@@ -70,7 +70,7 @@ namespace Curator
             var uri = new Uri(Constants.RestURL);
             JObject data = new JObject();
             data.Add("state", state);
-            data.Add("idproduct", id);
+            data.Add("idproducts", id);
             JObject sendContent = CreateMessage(Constants.ACCEPT_PROD, data);
             try
             {
@@ -103,8 +103,9 @@ namespace Curator
             var uri = new Uri(Constants.RestURL);
             JObject data = new JObject();
             data.Add("state", state);
-            data.Add("idproduct", id);
+            data.Add("idproducts", id);
             JObject sendContent = CreateMessage(Constants.REJECT_PROD, data);
+            Debug.WriteLine(sendContent.ToString());
             try
             {
                 var content = new StringContent(sendContent.ToString(), Encoding.UTF8, "application/json");
