@@ -88,15 +88,15 @@ namespace Curator
                 InputTransparent = true,
                 FontSize = 10,
                 HorizontalTextAlignment = TextAlignment.Center,
-                HorizontalOptions = LayoutOptions.CenterAndExpand
+                HorizontalOptions = LayoutOptions.Fill
 
             };
 
             bottomLayout.Children.Add(Price);
 
-            StackLayout locationStack = new StackLayout { Spacing = 0, BackgroundColor = Color.White, Orientation = StackOrientation.Horizontal, VerticalOptions = LayoutOptions.Center };
+            StackLayout locationStack = new StackLayout { Spacing = 0, BackgroundColor = Color.White, Orientation = StackOrientation.Horizontal, VerticalOptions = LayoutOptions.CenterAndExpand , HorizontalOptions = LayoutOptions.CenterAndExpand};
 
-            Image Location = new Image { Source = "location.png", HorizontalOptions = LayoutOptions.CenterAndExpand };
+            Image Location = new Image { Source = "location.png", HorizontalOptions = LayoutOptions.Fill };
 
             locationStack.Children.Add(Location);
             locationStack.Children.Add(Store);

@@ -29,7 +29,7 @@ namespace Curator
         }
         public Task<string> RejectProducts(int state, int id)
         {
-            return restService.AcceptProducts(state, id);
+            return restService.RejectProducts(state, id);
         }
        
     }

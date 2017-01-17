@@ -157,7 +157,7 @@ namespace Curator
         async void SwipedRight(int index)
         {
             int idproduct = productCards.product.idproducts;
-            string result = await App.Manager.AcceptProducts(Constants.ACCEPT_PROD, idproduct);
+            string result = await App.Manager.AcceptProducts(Constants.OK, idproduct);
             if (result.Equals("FAIL"))
                 notificator.Notify(ToastNotificationType.Error, "Curator", "Error al aceptar producto " + idproduct, TimeSpan.FromSeconds(2));
             
@@ -166,7 +166,7 @@ namespace Curator
         async void SwipedLeft(int index)
         {
             int idproduct = productCards.product.idproducts;
-            string result = await App.Manager.RejectProducts(Constants.REJECT_PROD, idproduct);
+            string result = await App.Manager.RejectProducts(Constants.REJECTING, idproduct);
             if (result.Equals("FAIL"))
                 notificator.Notify(ToastNotificationType.Error, "Curator", "Error al rechazar producto " + idproduct, TimeSpan.FromSeconds(2));
         }
